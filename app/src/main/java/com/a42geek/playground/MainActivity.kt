@@ -23,8 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val competedStep = remember { mutableStateOf(0) }
-                    StepsProgressBar(modifier = Modifier.fillMaxWidth(), numberOfSteps = 5, completedStep = competedStep.value)
+                    Content()
                 }
             }
         }
@@ -34,14 +33,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Content() {
-    val completedStep = remember { mutableStateOf(0) }
-    StepsProgressBar(modifier = Modifier.fillMaxWidth(), numberOfSteps = 5, completedStep = completedStep.value)
+    val currentStep = remember { mutableStateOf(1) }
+    StepsProgressBar(modifier = Modifier.fillMaxWidth(), numberOfSteps = 5, currentStep = currentStep.value)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     PlaygroundTheme {
-
+        Content()
     }
 }
