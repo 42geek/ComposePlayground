@@ -18,7 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun StepsProgressBar(modifier: Modifier = Modifier, numberOfSteps: Int, currentStep: Int) {
+fun StepsProgressBar(
+    modifier: Modifier = Modifier,
+    numberOfSteps: Int,
+    currentStep: Int
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -26,7 +30,7 @@ fun StepsProgressBar(modifier: Modifier = Modifier, numberOfSteps: Int, currentS
         for (step in 0..numberOfSteps) {
             Step(
                 modifier = Modifier.weight(1F),
-                isCompete = step < currentStep,
+                isCompeted = step < currentStep,
                 isCurrent = step == currentStep
             )
         }
@@ -34,9 +38,16 @@ fun StepsProgressBar(modifier: Modifier = Modifier, numberOfSteps: Int, currentS
 }
 
 @Composable
-fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean) {
-    val color = if (isCompete || isCurrent) Color.Red else Color.LightGray
-    val innerCircleColor = if (isCompete) Color.Red else Color.LightGray
+fun Step(
+    modifier: Modifier = Modifier,
+    isCompeted: Boolean,
+    isCurrent: Boolean
+) {
+    val lineThickness = 2.dp
+    val circleSize = 15.dp
+
+    val color = if (isCompeted || isCurrent) Color.Red else Color.LightGray
+    val innerCircleColor = if (isCompeted) Color.Red else Color.LightGray
 
     Box(modifier = modifier) {
 
@@ -44,16 +55,16 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean) 
         Divider(
             modifier = Modifier.align(Alignment.CenterStart),
             color = color,
-            thickness = 2.dp
+            thickness = lineThickness
         )
 
         //Circle
         Canvas(modifier = Modifier
-            .size(15.dp)
+            .size(circleSize)
             .align(Alignment.CenterEnd)
             .border(
                 shape = CircleShape,
-                width = 2.dp,
+                width = lineThickness,
                 color = color
             ),
             onDraw = {
@@ -66,6 +77,6 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean) 
 @Preview
 @Composable
 fun StepsProgressBarPreview() {
-    val currentStep = remember { mutableStateOf(1) }
+    val currentStep = remember { mutableStateOf(0) }
     StepsProgressBar(modifier = Modifier.fillMaxWidth(), numberOfSteps = 5, currentStep = currentStep.value)
 }
